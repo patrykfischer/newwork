@@ -33,4 +33,10 @@ class ProductTest < ActiveSupport::TestCase
   	assert p.errors[:image_url].any?
   end
 
+  test "Should not destroy product use in cart" do
+    p =Product.new(price: "10.00", description: "dsdsds", title: " deed", image_url: "file.png")
+    p.line_items << LineItem.new
+    assert ! p.destroy
+  end
+
 end 
