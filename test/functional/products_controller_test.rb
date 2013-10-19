@@ -18,10 +18,18 @@ class ProductsControllerTest < ActionController::TestCase
 
   test "should create product" do
     assert_difference('Product.count') do
-      post :create, product: {  title: @product. title, description: @product.description, image_url: @product.image_url, price: @product.price }
+      post :create, product: {  title: @product.title, description: @product.description, image_url: @product.image_url, price: @product.price }
     end
 
     assert_redirected_to product_path(assigns(:product))
+  end
+
+  test "should not create product without full data" do
+    assert_difference('Product.count',0) do
+      post :create, product: { title: nil, description: @product.description}
+    end
+
+    assert_template :new
   end
 
   test "should show product" do
