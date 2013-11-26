@@ -43,7 +43,7 @@ class ProductsControllerTest < ActionController::TestCase
   end
 
   test "should update product" do
-    put :update, id: @product, product: {  title: @product. title, description: @product.description, image_url: @product.image_url, price: @product.price }
+    put :update, id: @product, product: {  title: @product.title, description: @product.description, image_url: @product.image_url, price: @product.price }
     assert_redirected_to product_path(assigns(:product))
   end
 
@@ -51,7 +51,15 @@ class ProductsControllerTest < ActionController::TestCase
     assert_difference('Product.count', -1) do
       delete :destroy, id: @product
     end
-
     assert_redirected_to products_path
   end
+
+  test "should not update product without right date" do
+    assert_difference("Product.count",0)do
+      post :update, id: @product, product: {  title: nil, description: @product.description, image_url: "product", price: @product.price }
+    end
+    assert_template :edit
+  end
+
+
 end
